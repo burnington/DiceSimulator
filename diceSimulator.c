@@ -37,5 +37,15 @@ int main(void) {
         printf("combinationArray[%d]:   %d\n", y + 2, combinationArray[y]);         // Print out the array
     }
 
+    /* write CSV data to file */
+    FILE *f = fopen("data.csv", "w");
+    fputs("value,occurrences\n", f);
+    for (i = 0; i < arraySize; i++)
+        fprintf(f, "%d,%d\n", i+2, combinationArray[i]);
+    fclose(f);
+
+    /* graph it in R */
+    system("Rscript ./plot.r &>/dev/null");
+
     return (0);
 }
