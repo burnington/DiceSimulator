@@ -3,11 +3,12 @@
 #include <time.h>
 
 int main(void) {
+    int die1 = 6;                           // Amount of sides on the first die
+    int die2 = 6;                           // Amount of sides on the second die
+    int sampleSize = 40;                    // Number of "rolls"
+
     int total;
-    int sampleSize = 40;
-    int die1 = 4;
-    int die2 = 98;
-    int arraySize = die1 + die2 - 1;
+    int arraySize = die1 + die2 - 1;        // calculates the needed amount of elements for the array
     int combinationArray[arraySize];
     int dice1;
     int dice2;
@@ -16,16 +17,16 @@ int main(void) {
     int i;
     
     for (i = 0; i < arraySize; i++) {
-        combinationArray[i] = 0;
+        combinationArray[i] = 0;            // Initialize combinationArray[i] to 0
     }
 
     srand( time(NULL) );
 
     for (x = 0; x < sampleSize; x++) {
-        dice1 = rand() %die1;
-        dice2 = rand() %die2;
+        dice1 = rand() %die1;               // "rolls" the first die
+        dice2 = rand() %die2;               // "rolls" the second die"
         total = dice1 + dice2;
-        combinationArray[total] += 1;
+        combinationArray[total] += 1;       // Increment how many times that number has been rolled
         printf("dice1: %3d\n", dice1);
         printf("dice2: %3d\n", dice2);
         printf("total: %3d\n", total);
@@ -33,7 +34,7 @@ int main(void) {
     }
 
     for (y = 0; y < arraySize; y++) {
-        printf("combinationArray[%d]:   %d\n", y + 2, combinationArray[y]);
+        printf("combinationArray[%d]:   %d\n", y + 2, combinationArray[y]);         // Print out the array
     }
 
     return (0);
