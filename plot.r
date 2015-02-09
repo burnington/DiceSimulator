@@ -3,7 +3,7 @@ d <- read.csv("data.csv")
 d$value <- as.numeric(d$value)
 d$occurrences <- as.numeric(d$occurrences)
 
-# uncomment these lines if you want the *percent*
+# uncomment these lines if you want the *percent* occurred
 # instead of the *total* number occurred (for each value)
 #sum <- sum(d$occurrences)
 #d$occurrences <- d$occurrences/sum
