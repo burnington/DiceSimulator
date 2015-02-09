@@ -24,7 +24,7 @@ int main(void) {
 
     for (x = 0; x < sampleSize; x++) {
         dice1 = rand() %die1;               // "rolls" the first die
-        dice2 = rand() %die2;               // "rolls" the second die"
+        dice2 = rand() %die2;               // "rolls" the second die
         total = dice1 + dice2;
         combinationArray[total] += 1;       // Increment how many times that number has been rolled
         printf("dice1: %3d\n", dice1);
