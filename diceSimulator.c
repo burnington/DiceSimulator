@@ -2,27 +2,28 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main(void) {
-    int die1 = 6;                           // Amount of sides on the first die
-    int die2 = 6;                           // Amount of sides on the second die
-    int sampleSize = 40;                    // Number of "rolls"
+#define DIE1_NUM_SIDES 6
+#define DIE2_NUM_SIDES 6
+#define SAMPLE_SIZE    40
 
+#define ARRAY_SIZE DIE1_NUM_SIDES + DIE2_NUM_SIDES - 1
+
+int main(void) {
     int total;
-    int arraySize = die1 + die2 - 1;        // calculates the needed amount of elements for the array
-    int combinationArray[arraySize];
+    int combinationArray[ARRAY_SIZE];
     int dice1;
     int dice2;
     int x;
     int y;
     int i;
     
-    for (i = 0; i < arraySize; i++) {
+    for (i = 0; i < ARRAY_SIZE; i++) {
         combinationArray[i] = 0;            // Initialize combinationArray[i] to 0
     }
 
     srand( time(NULL) );
 
-    for (x = 0; x < sampleSize; x++) {
+    for (x = 0; x < SAMPLE_SIZE; x++) {
         dice1 = rand() %die1;               // "rolls" the first die
         dice2 = rand() %die2;               // "rolls" the second die
         total = dice1 + dice2;
@@ -33,14 +34,14 @@ int main(void) {
         printf("combinationArray[%d]: %d\n\n", total + 2, combinationArray[total]);
     }
 
-    for (y = 0; y < arraySize; y++) {
+    for (y = 0; y < ARRAY_SIZE; y++) {
         printf("combinationArray[%d]:   %d\n", y + 2, combinationArray[y]);         // Print out the array
     }
 
     /* write CSV data to file */
     FILE *f = fopen("data.csv", "w");
     fputs("value,occurrences\n", f);
-    for (i = 0; i < arraySize; i++)
+    for (i = 0; i < ARRAY_SIZE; i++)
         fprintf(f, "%d,%d\n", i+2, combinationArray[i]);
     fclose(f);
 
