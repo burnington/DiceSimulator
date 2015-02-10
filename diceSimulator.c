@@ -9,11 +9,11 @@
 #define ARRAY_SIZE DIE1_NUM_SIDES + DIE2_NUM_SIDES - 1
 
 int main(void) {
-    unsigned int i, combinationArray[ARRAY_SIZE];
+    unsigned int i, results[ARRAY_SIZE];
     
     /* zero out the array */
     for (i = 0; i < ARRAY_SIZE; i++)
-        combinationArray[i] = 0;
+        results[i] = 0;
 
     srand(time(NULL));
 
@@ -25,23 +25,23 @@ int main(void) {
         dice2 = rand() % DIE2_NUM_SIDES;
 
         total = dice1 + dice2;
-        combinationArray[total] += 1;
+        results[total] += 1;
 
         printf("dice1: %3u\n", dice1);
         printf("dice2: %3u\n", dice2);
         printf("total: %3u\n", total);
-        printf("combinationArray[%d]: %u\n\n", total + 2, combinationArray[total]);
+        printf("results[%d]: %u\n\n", total + 2, results[total]);
     }
 
     /* print out the array */
     for (i = 0; i < ARRAY_SIZE; i++)
-        printf("combinationArray[%u]:   %u\n", i + 2, combinationArray[i]);
+        printf("results[%u]:   %u\n", i + 2, results[i]);
 
     /* write CSV data to file */
     FILE *f = fopen("data.csv", "w");
     fputs("value,occurrences\n", f);
     for (i = 0; i < ARRAY_SIZE; i++)
-        fprintf(f, "%u,%u\n", i+2, combinationArray[i]);
+        fprintf(f, "%u,%u\n", i+2, results[i]);
     fclose(f);
 
     /* graph it in R */
