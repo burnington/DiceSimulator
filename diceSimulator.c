@@ -34,9 +34,8 @@ int main(void) {
     }
 
     /* print out the array */
-    for (i = 0; i < ARRAY_SIZE; i++) {
+    for (i = 0; i < ARRAY_SIZE; i++)
         printf("combinationArray[%u]:   %u\n", i + 2, combinationArray[i]);
-    }
 
     /* write CSV data to file */
     FILE *f = fopen("data.csv", "w");
@@ -48,5 +47,5 @@ int main(void) {
     /* graph it in R */
     system("Rscript ./plot.r &>/dev/null");
 
-    return (0);
+    return 0;
 }
