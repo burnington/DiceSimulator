@@ -11,12 +11,13 @@
 int main(void) {
     unsigned int i, combinationArray[ARRAY_SIZE];
     
-    for (i = 0; i < ARRAY_SIZE; i++) {
-        combinationArray[i] = 0;            // Initialize combinationArray[i] to 0
-    }
+    /* zero out the array */
+    for (i = 0; i < ARRAY_SIZE; i++)
+        combinationArray[i] = 0;
 
-    srand( time(NULL) );
+    srand(time(NULL));
 
+    /* simulate dice rolls and sum the results */
     for (i = 0; i < SAMPLE_SIZE; i++) {
         unsigned int dice1, dice2, total;
 
@@ -24,7 +25,7 @@ int main(void) {
         dice2 = rand() % DIE2_NUM_SIDES;
 
         total = dice1 + dice2;
-        combinationArray[total] += 1;       // Increment how many times that number has been rolled
+        combinationArray[total] += 1;
 
         printf("dice1: %3u\n", dice1);
         printf("dice2: %3u\n", dice2);
@@ -32,8 +33,9 @@ int main(void) {
         printf("combinationArray[%d]: %u\n\n", total + 2, combinationArray[total]);
     }
 
+    /* print out the array */
     for (i = 0; i < ARRAY_SIZE; i++) {
-        printf("combinationArray[%u]:   %u\n", i + 2, combinationArray[i]);         // Print out the array
+        printf("combinationArray[%u]:   %u\n", i + 2, combinationArray[i]);
     }
 
     /* write CSV data to file */
