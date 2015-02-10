@@ -13,8 +13,6 @@ int main(void) {
     int combinationArray[ARRAY_SIZE];
     int dice1;
     int dice2;
-    int x;
-    int y;
     int i;
     
     for (i = 0; i < ARRAY_SIZE; i++) {
@@ -23,7 +21,7 @@ int main(void) {
 
     srand( time(NULL) );
 
-    for (x = 0; x < SAMPLE_SIZE; x++) {
+    for (i = 0; i < SAMPLE_SIZE; i++) {
         dice1 = rand() %die1;               // "rolls" the first die
         dice2 = rand() %die2;               // "rolls" the second die
         total = dice1 + dice2;
@@ -34,8 +32,8 @@ int main(void) {
         printf("combinationArray[%d]: %d\n\n", total + 2, combinationArray[total]);
     }
 
-    for (y = 0; y < ARRAY_SIZE; y++) {
-        printf("combinationArray[%d]:   %d\n", y + 2, combinationArray[y]);         // Print out the array
+    for (i = 0; i < ARRAY_SIZE; i++) {
+        printf("combinationArray[%d]:   %d\n", i + 2, combinationArray[i]);         // Print out the array
     }
 
     /* write CSV data to file */
