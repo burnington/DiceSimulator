@@ -9,10 +9,7 @@
 #define ARRAY_SIZE DIE1_NUM_SIDES + DIE2_NUM_SIDES - 1
 
 int main(void) {
-    int total;
     int combinationArray[ARRAY_SIZE];
-    int dice1;
-    int dice2;
     int i;
     
     for (i = 0; i < ARRAY_SIZE; i++) {
@@ -22,10 +19,14 @@ int main(void) {
     srand( time(NULL) );
 
     for (i = 0; i < SAMPLE_SIZE; i++) {
-        dice1 = rand() %die1;               // "rolls" the first die
-        dice2 = rand() %die2;               // "rolls" the second die
+        int dice1, dice2, total;
+
+        dice1 = rand() % DIE1_NUM_SIDES;
+        dice2 = rand() % DIE2_NUM_SIDES;
+
         total = dice1 + dice2;
         combinationArray[total] += 1;       // Increment how many times that number has been rolled
+
         printf("dice1: %3d\n", dice1);
         printf("dice2: %3d\n", dice2);
         printf("total: %3d\n", total);
