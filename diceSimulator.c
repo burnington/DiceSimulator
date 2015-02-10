@@ -4,7 +4,7 @@
 
 #define DIE1_NUM_SIDES 6
 #define DIE2_NUM_SIDES 6
-#define SAMPLE_SIZE    40
+#define SAMPLE_SIZE    1000
 
 #define ARRAY_SIZE DIE1_NUM_SIDES + DIE2_NUM_SIDES - 1
 
@@ -26,16 +26,11 @@ int main(void) {
 
         total = dice1 + dice2;
         results[total] += 1;
-
-        printf("dice1: %3u\n", dice1);
-        printf("dice2: %3u\n", dice2);
-        printf("total: %3u\n", total);
-        printf("results[%d]: %u\n\n", total + 2, results[total]);
     }
 
-    /* print out the array */
+    /* print out the results */
     for (i = 0; i < ARRAY_SIZE; i++)
-        printf("results[%u]:   %u\n", i + 2, results[i]);
+        printf("%2u: %2u\n", i + 2, results[i]);
 
     /* write CSV data to file */
     FILE *f = fopen("data.csv", "w");
