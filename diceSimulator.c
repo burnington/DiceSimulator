@@ -8,12 +8,13 @@
 
 #define ARRAY_SIZE DIE1_NUM_SIDES + DIE2_NUM_SIDES - 1
 
-unsigned int pos_ceil(double num);
-void progress_bar(double complete, double total);
+int graph(unsigned int *results);
+unsigned int pos_ceil(long double num);
+void progress_bar(long double complete, long double total);
 
 int main(void) {
     unsigned int i, results[ARRAY_SIZE];
-    
+
     /* zero out the array */
     for (i = 0; i < ARRAY_SIZE; i++)
         results[i] = 0;
@@ -54,7 +55,7 @@ int main(void) {
  * Print out a progress bar.
  * Only updates when it needs to.
  */
-void progress_bar(double complete, double total) {
+void progress_bar(long double complete, long double total) {
     unsigned int i, perc;
     static unsigned int old_perc = 0;
 
@@ -77,7 +78,7 @@ void progress_bar(double complete, double total) {
  * Round up.
  * Only works for pos. numbers.
  */
-unsigned int pos_ceil(double num) {
+unsigned int pos_ceil(long double num) {
     int inum = (int)num;
 
     if (num == (float)inum)
