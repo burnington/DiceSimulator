@@ -64,7 +64,8 @@ void progress_bar(long double complete, long double total) {
     if (perc == old_perc) return;
     old_perc = perc;
 
-    printf("\r%u%% ", perc);
+    printf("\r%c[2K", 27);
+    printf("%u%% ", perc);
     for (i = 0; i < perc/2; i++)
         printf("#");
 
