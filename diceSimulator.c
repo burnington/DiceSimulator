@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #define DIE1_NUM_SIDES 6
 #define DIE2_NUM_SIDES 6
@@ -38,15 +39,8 @@ int main(void) {
     for (i = 0; i < ARRAY_SIZE; i++)
         printf("%2u: %2u\n", i + 2, results[i]);
 
-    /* write CSV data to file */
-    FILE *f = fopen("data.csv", "w");
-    fputs("value,occurrences\n", f);
-    for (i = 0; i < ARRAY_SIZE; i++)
-        fprintf(f, "%u,%u\n", i+2, results[i]);
-    fclose(f);
-
     /* graph it in R */
-    system("Rscript ./plot.r &>/dev/null");
+    graph(results);
 
     return 0;
 }
@@ -86,4 +80,50 @@ unsigned int pos_ceil(long double num) {
         return inum;
 
     return ((unsigned int) inum + 1);
+}
+
+/**
+ * Graph the results using R.
+ */
+int graph(unsigned int *results) {
+    FILE *f;
+    unsigned int i;
+
+    if (system("which Rscript &>/dev/null") != 0) {
+        fprintf(stderr, "error: could not find Rscript\n");
+        return -1;
+    }
+
+    f = fopen("plot.r", "w");
+    fputs(
+        "d <- read.csv('data.csv')\n"
+        "d$value <- as.numeric(d$value)\n"
+        "d$occurrences <- as.numeric(d$occurrences)\n"
+
+        "# uncomment these lines if you want the *percent* occurred\n"
+        "# instead of the *total* number occurred (for each value)\n"
+        "#sum <- sum(d$occurrences)\n"
+        "#d$occurrences <- d$occurrences/sum\n"
+
+        "png('plot.png', width=5, height=5, units='in', res=300)\n"
+        "barplot(d$occurrences, names.arg=d$value,\n"
+        "        main='Dice Simulator',\n"
+        "        xlab='Value (dice1 + dice2)', ylab='Number Occurred')\n"
+        "dev.off()\n"
+    , f);
+    fclose(f);
+
+    f = fopen("data.csv", "w");
+    fputs("value,occurrences\n", f);
+    for (i = 0; i < ARRAY_SIZE; i++)
+        fprintf(f, "%u,%u\n", i+2, results[i]);
+    fclose(f);
+
+    if (!fork()) {
+        system("Rscript ./plot.r &>/dev/null");
+        unlink("plot.r");
+        unlink("data.csv");
+    }
+
+    return 0;
 }
