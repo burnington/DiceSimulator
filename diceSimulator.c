@@ -46,6 +46,7 @@ int main(void) {
 
     /* graph it in R */
     system("Rscript ./plot.r &>/dev/null");
+    unlink("data.csv");
 
     return (0);
 }
