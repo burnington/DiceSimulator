@@ -2,51 +2,89 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define DIE1_NUM_SIDES 6
+#define DIE2_NUM_SIDES 6
+#define SAMPLE_SIZE    1000
+
+#define ARRAY_SIZE DIE1_NUM_SIDES + DIE2_NUM_SIDES - 1
+
+int graph(unsigned int *results);
+unsigned int pos_ceil(long double num);
+void progress_bar(long double complete, long double total);
+
 int main(void) {
-    int die1 = 6;                           // Amount of sides on the first die
-    int die2 = 6;                           // Amount of sides on the second die
-    int sampleSize = 40;                    // Number of "rolls"
+    unsigned int i, results[ARRAY_SIZE];
 
-    int total;
-    int arraySize = die1 + die2 - 1;        // calculates the needed amount of elements for the array
-    int combinationArray[arraySize];
-    int dice1;
-    int dice2;
-    int x;
-    int y;
-    int i;
-    
-    for (i = 0; i < arraySize; i++) {
-        combinationArray[i] = 0;            // Initialize combinationArray[i] to 0
-    }
+    /* zero out the array */
+    for (i = 0; i < ARRAY_SIZE; i++)
+        results[i] = 0;
 
-    srand( time(NULL) );
+    srand(time(NULL));
 
-    for (x = 0; x < sampleSize; x++) {
-        dice1 = rand() %die1;               // "rolls" the first die
-        dice2 = rand() %die2;               // "rolls" the second die
+    /* simulate dice rolls and sum the results */
+    for (i = 0; i < SAMPLE_SIZE; i++) {
+        unsigned int dice1, dice2, total;
+
+        dice1 = rand() % DIE1_NUM_SIDES;
+        dice2 = rand() % DIE2_NUM_SIDES;
+
         total = dice1 + dice2;
-        combinationArray[total] += 1;       // Increment how many times that number has been rolled
-        printf("dice1: %3d\n", dice1);
-        printf("dice2: %3d\n", dice2);
-        printf("total: %3d\n", total);
-        printf("combinationArray[%d]: %d\n\n", total + 2, combinationArray[total]);
+        results[total] += 1;
+
+        progress_bar(i+1, SAMPLE_SIZE);
     }
 
-    for (y = 0; y < arraySize; y++) {
-        printf("combinationArray[%d]:   %d\n", y + 2, combinationArray[y]);         // Print out the array
-    }
+    /* print out the results */
+    for (i = 0; i < ARRAY_SIZE; i++)
+        printf("%2u: %2u\n", i + 2, results[i]);
 
     /* write CSV data to file */
     FILE *f = fopen("data.csv", "w");
     fputs("value,occurrences\n", f);
-    for (i = 0; i < arraySize; i++)
-        fprintf(f, "%d,%d\n", i+2, combinationArray[i]);
+    for (i = 0; i < ARRAY_SIZE; i++)
+        fprintf(f, "%u,%u\n", i+2, results[i]);
     fclose(f);
 
     /* graph it in R */
     system("Rscript ./plot.r &>/dev/null");
     unlink("data.csv");
 
-    return (0);
+    return 0;
+}
+
+/**
+ * Print out a progress bar.
+ * Only updates when it needs to.
+ */
+void progress_bar(long double complete, long double total) {
+    unsigned int i, perc;
+    static unsigned int old_perc = 0;
+
+    perc = pos_ceil(100*(complete/total));
+
+    if (perc == old_perc) return;
+    old_perc = perc;
+
+    printf("\r%c[2K", 27);
+    printf("%u%% ", perc);
+    for (i = 0; i < perc/2; i++)
+        printf("#");
+
+    if (perc == 100)
+        printf("\n");
+
+    fflush(stdout);
+}
+
+/**
+ * Round up.
+ * Only works for pos. numbers.
+ */
+unsigned int pos_ceil(long double num) {
+    int inum = (int)num;
+
+    if (num == (float)inum)
+        return inum;
+
+    return ((unsigned int) inum + 1);
 }
