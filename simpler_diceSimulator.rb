@@ -34,5 +34,5 @@ results.each_with_index do |occurrences, value|
 end
 
 # Graph it in R.
-`Rscript ./plot.R`
+`Rscript ./plot.r`
 File.delete("data.csv")
