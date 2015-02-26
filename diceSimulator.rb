@@ -12,7 +12,7 @@ die1_sides = (ARGV[1] || 6).to_i # default = 6
 die2_sides = (ARGV[2] || 6).to_i # default = 6
 
 # Create a new array full of zeros.
-results = Array.new(die1_sides + die2_sides + 1) { 0 }
+results = Array.new(die1_sides + die2_sides - 1) { 0 }
 
 # Function to draw a progress bar.
 def progress_bar(complete, total)
@@ -29,8 +29,8 @@ end
 
 # Run the trials and collect the data.
 num_trials.times do |i|
-    die1 = rand(1..die1_sides)
-    die2 = rand(1..die2_sides)
+    die1 = rand(die1_sides)
+    die2 = rand(die2_sides)
 
     results[die1+die2] += 1
     progress_bar(i+1, num_trials)
@@ -42,8 +42,8 @@ File.open("data.csv", "w") do |f|
     f.write("value,occurrences\n")
 
     results.each_with_index do |occurrences, value|
-        printf("%2d: %2d\n", value, occurrences)
-        f.write("#{value},#{occurrences}\n");
+        printf("%2d: %2d\n", value+2, occurrences)
+        f.write("#{value+2},#{occurrences}\n");
     end
 end
 
