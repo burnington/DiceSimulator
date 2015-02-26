@@ -48,5 +48,6 @@ File.open("data.csv", "w") do |f|
 end
 
 # Graph the data and delete the CSV file.
+puts "Graphing results..."
 `Rscript ./plot.r`
 File.delete("data.csv")
