@@ -37,5 +37,5 @@ for i in $(seq 1 $ARRAY_SIZE); do
 done
 
 # Graph it in R.
-Rscript ./plot.r
+Rscript ../plot.r
 rm data.csv

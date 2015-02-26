@@ -35,5 +35,5 @@ end
 
 # Graph it in R.
 csv.close
-`Rscript ./plot.r`
+`Rscript ../plot.r`
 File.delete("data.csv")
