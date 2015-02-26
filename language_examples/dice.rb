@@ -5,9 +5,9 @@
 # parsing... the progress bar... etc. It should be pretty easy to understand.
 
 # In Ruby, constant variables should be all caps.
-DIE1_SIDES = 6
-DIE2_SIDES = 6
-SAMPLE_SIZE    = 1000
+DIE1_SIDES  = 6
+DIE2_SIDES  = 6
+SAMPLE_SIZE = 1000
 
 ARRAY_SIZE = DIE1_SIDES + DIE2_SIDES - 1
 
