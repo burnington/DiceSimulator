@@ -49,6 +49,7 @@ int main(int argc, char **argv) {
 
         progress_bar(i+1, trials);
     }
+    puts("");
 
     /* print out the results */
     for (i = 0; i < array_size; i++)
@@ -79,9 +80,6 @@ void progress_bar(long double complete, long double total) {
     printf("%u%% ", perc);
     for (i = 0; i < perc/2; i++)
         printf("#");
-
-    if (perc == 100)
-        printf("\n");
 
     fflush(stdout);
 }
