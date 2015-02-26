@@ -19,8 +19,8 @@ results = [0] * ARRAY_SIZE
 
 # Simulate the dice rolls and sum the results.
 for i in range(SAMPLE_SIZE):
-    die1 = randrange(1, DIE1_SIDES)
-    die2 = randrange(1, DIE2_SIDES)
+    die1 = randrange(0, DIE1_SIDES)
+    die2 = randrange(0, DIE2_SIDES)
 
     results[die1 + die2] += 1
 
@@ -30,10 +30,10 @@ csv.write("value,occurrences\n")
 
 # Print out the results, and write it to the CSV.
 for i in range(ARRAY_SIZE):
-    print(str(i) + "," + str(results[i]))
-    csv.write(str(i) + "," + str(results[i]) + "\n")
+    print("%2d: %2d" % (i+2, results[i]))
+    csv.write(str(i+2) + "," + str(results[i]) + "\n")
 
 # Graph it in R.
 csv.close()
-os.system("Rscript ../plot.r")
+os.system("Rscript ../plot.r &>/dev/null")
 os.remove("data.csv")
