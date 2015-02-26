@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 d <- read.csv('data.csv')
 d$value <- as.numeric(d$value)
 d$occurrences <- as.numeric(d$occurrences)
