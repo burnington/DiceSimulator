@@ -19,7 +19,6 @@ SAMPLE_SIZE.times do |i|
     die1 = rand(DIE1_SIDES)
     die2 = rand(DIE2_SIDES)
 
-    total = die1 + die2
     results[die1 + die2] += 1
 end
 
