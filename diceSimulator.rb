@@ -16,7 +16,7 @@ results = Array.new(die1_sides + die2_sides + 1) { 0 }
 
 # Function to draw a progress bar.
 def progress_bar(complete, total)
-    @old_perc ||= 0
+    @old_perc ||= -1
     perc = (100*complete/total).round
 
     # only update when we get a new percent
