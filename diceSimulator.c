@@ -49,6 +49,7 @@ int main(int argc, char **argv) {
 
         progress_bar(i+1, trials);
     }
+    puts("");
 
     /* print out the results */
     for (i = 0; i < array_size; i++)
@@ -80,9 +81,6 @@ void progress_bar(long double complete, long double total) {
     for (i = 0; i < perc/2; i++)
         printf("#");
 
-    if (perc == 100)
-        printf("\n");
-
     fflush(stdout);
 }
 
@@ -111,25 +109,6 @@ int graph(unsigned int *results, size_t len) {
         return -1;
     }
 
-    f = fopen("plot.r", "w");
-    fputs(
-        "d <- read.csv('data.csv')\n"
-        "d$value <- as.numeric(d$value)\n"
-        "d$occurrences <- as.numeric(d$occurrences)\n"
-
-        "# uncomment these lines if you want the *percent* occurred\n"
-        "# instead of the *total* number occurred (for each value)\n"
-        "#sum <- sum(d$occurrences)\n"
-        "#d$occurrences <- d$occurrences/sum\n"
-
-        "png('plot.png', width=5, height=5, units='in', res=300)\n"
-        "barplot(d$occurrences, names.arg=d$value,\n"
-        "        main='Dice Simulator',\n"
-        "        xlab='Value (dice1 + dice2)', ylab='Number Occurred')\n"
-        "dev.off()\n"
-    , f);
-    fclose(f);
-
     f = fopen("data.csv", "w");
     fputs("value,occurrences\n", f);
     for (i = 0; i < len; i++)
@@ -137,7 +116,6 @@ int graph(unsigned int *results, size_t len) {
     fclose(f);
 
     system("Rscript ./plot.r &>/dev/null");
-    unlink("plot.r");
     unlink("data.csv");
 
     return 0;
